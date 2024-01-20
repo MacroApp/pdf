@@ -85,7 +85,7 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-// MARK: Share Sheet
+// MARK: - Share Sheet
 
 struct ShareSheet: UIViewControllerRepresentable {
 

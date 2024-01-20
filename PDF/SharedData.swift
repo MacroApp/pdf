@@ -9,7 +9,7 @@ import Foundation
 
 class SharedData: ObservableObject {
 
-    // MARK: PDF Properties
+    // MARK: - PDF Properties
     // ShareSheet producing error when using @State
     // Workaround: Use @StateObject instead
     

@@ -9,16 +9,16 @@ import SwiftUI
 
 extension View {
 
-    // MARK: Extracting View's Height/Width
+    // MARK: - Extracting View's Height/Width
     func convertToScrollView<Content: View>(@ViewBuilder content: @escaping () -> Content) -> UIScrollView {
 
         let scrollView = UIScrollView()
 
-        // MARK: Converting SwiftUI View to UIKit View
+        // MARK: - Converting SwiftUI View to UIKit View
         let hostingController = UIHostingController (rootView: content ()).view!
         hostingController.translatesAutoresizingMaskIntoConstraints = false
 
-        // MARK: Constraints
+        // MARK: - Constraints
         let constraints = [
 
              hostingController.leadingAnchor.constraint (equalTo: scrollView.leadingAnchor),
@@ -26,7 +26,7 @@ extension View {
              hostingController.topAnchor.constraint (equalTo: scrollView.topAnchor),
              hostingController.bottomAnchor.constraint(equalTo:scrollView.bottomAnchor),
 
-             // MARK: Width Anchor
+             // MARK: - Width Anchor
 
              hostingController.widthAnchor.constraint(equalToConstant: screenBounds().width)
         ]
@@ -39,21 +39,21 @@ extension View {
 
     func exportPDF<Content: View>(@ViewBuilder content: @escaping () -> Content, completion: @escaping (Bool, URL?) -> ()){
 
-        // MARK: Temporary URL
+        // MARK: - Temporary URL
         let documentDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
 
-        // MARK: To Generate New File when ever its generated
+        // MARK: - To Generate New File when ever its generated
         let outputFileURL = documentDirectory.appendingPathComponent ("\(UUID().uuidString).pdf")
 
-        // MARK: PDF View
+        // MARK: - PDF View
         let pdfView = convertToScrollView { content() }
         pdfView.tag = 1009
         let size = pdfView.contentSize
 
-        // MARK: Removing Safe Area Top Value
+        // MARK: - Removing Safe Area Top Value
         pdfView.frame = CGRect(x: 0, y: getSafeArea().top, width: size.width, height: size.height)
 
-        // MARK: Attaching to Root View and rendering the PDF
+        // MARK: - Attaching to Root View and rendering the PDF
         getRootController().view.insertSubview(pdfView, at: 0)
 
         // MARK: Rendering PDF
@@ -73,7 +73,7 @@ extension View {
             print(error.localizedDescription)
         }
 
-        // removing the added View
+        // MARK: - removing the added View
         getRootController().view.subviews.forEach { view in
             if view.tag == 1009 {
                 print("Removed")
